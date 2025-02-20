@@ -1,5 +1,7 @@
+from contracts.schema import compraShema
 from datasource.api import APICollector
 
-minha_classe = APICollector().getData(20)
+schema = compraShema
+minha_classe = APICollector(schema).start(1)
 
 print(minha_classe)
