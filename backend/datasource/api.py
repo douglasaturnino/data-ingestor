@@ -19,3 +19,17 @@ class APICollector:
                 "http://127.0.0.01:8000/gerar_compra"
             ).json()
         return response
+
+    def extractData(self, response):
+        result: List[GenericSchema] = []
+        for item in response:
+            index = {}
+            for key, value in self._schema.items():
+                if type(item.get(key)) == value:
+                    index[key] = item[key]
+                else:
+                    index[key] = None
+
+                result.append(index)
+
+        return result
