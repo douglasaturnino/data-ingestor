@@ -39,6 +39,6 @@ class APICollector:
                 else:
                     index[key] = None
 
-                result.append(index)
+            result.append(index)
 
         return result
