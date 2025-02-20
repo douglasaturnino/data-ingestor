@@ -1,12 +1,21 @@
+from typing import List
+
 import requests
+from contracts.schema import GenericSchema
 
 
 class APICollector:
-    def __init__(self):
-        self._schema = None
+    def __init__(self, schema):
+        self._schema = schema
         self._aws = None
         self._buffer = None
         return
+
+    def start(self, param):
+        response = self.getData(param)
+        response = self.extractData(response)
+
+        return response
 
     def getData(self, param):
         response = None
