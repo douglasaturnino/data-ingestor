@@ -1,8 +1,8 @@
 from typing import Dict, Union
 
-GenericShema = Dict[str, Union[str, float, int]]
+GenericSchema = Dict[str, Union[str, float, int]]
 
-compraShema: GenericShema = {
+compraShema: GenericSchema = {
     "ean": int,
     "price": float,
     "store": int,
