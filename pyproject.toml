@@ -8,9 +8,11 @@ dependencies = [
     "boto3>=1.36.25",
     "faker>=36.1.1",
     "fastapi>=0.115.8",
+    "openpyxl>=3.1.5",
     "pandas>=2.2.3",
     "pyarrow>=19.0.1",
     "requests>=2.32.3",
+    "streamlit>=1.42.2",
     "uvicorn>=0.34.0",
 ]
 
