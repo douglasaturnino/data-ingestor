@@ -8,9 +8,9 @@ from contracts.schema import GenericSchema
 
 
 class APICollector:
-    def __init__(self, schema):
+    def __init__(self, schema, aws):
         self._schema = schema
-        self._aws = None
+        self._aws = aws
         self._buffer = None
         return
 
