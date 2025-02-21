@@ -1,3 +1,4 @@
+from datetime import datetime
 from io import BytesIO
 from typing import List
 
@@ -20,7 +21,13 @@ class APICollector:
         response = self.transformDf(response)
         response = self.convertToParquet(response)
 
-        return response
+        if self._buffer is not None:
+            file_name = self.fileName()
+            print(file_name)
+            self._aws.upload_file(response, file_name)
+            return True
+
+        return False
 
     def getData(self, param):
         response = None
@@ -60,3 +67,8 @@ class APICollector:
         except Exception as e:
             print(f"Error ao transformar o DF em parquet: {e}")
             self._buffer = None
+
+    def fileName(self):
+        data_atual = datetime.now().isoformat()
+        match = data_atual.split(".")
+        return f"api/api-reponse-compra{match[0]}.parquet"
