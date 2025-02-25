@@ -1,3 +1,6 @@
+
+from io import BytesIO
+
 import openpyxl
 import pandas as pd
 import streamlit as st
@@ -9,17 +12,22 @@ class CSVCollector:
         self._schema = schema
         self._aws = aws
         self.cell_range = cell_range
+        self._buffer = None
         return
 
     def start(self):
         getData = self.getData()
         extractData = None
+        validateData = None
 
         if getData is not None:
             extractData = self.extractData(getData)
         if extractData is not None:
             validateData = self.validateData(extractData)
-            return validateData
+        if validateData is not None:
+            response = self.convertToParquet(validateData)
+
+
 
     def getData(self):
         dados_excel = st.file_uploader(
@@ -60,3 +68,14 @@ class CSVCollector:
 
         st.success("Tudo certo!")
         return dataframe
+
+    def convertToParquet(self, validateData):
+        self._buffer = BytesIO()
+        try:
+            validateData.to_parquet(self._buffer, engine="pyarrow")
+            return self._buffer
+        except Exception as e:
+            print(f"Error ao transformar o DF em parquet: {e}")
+            self._buffer = None
+
+
