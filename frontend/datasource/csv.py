@@ -33,6 +33,7 @@ class CSVCollector:
             self._aws.upload_file(response, file_name)
             return True
 
+
     def getData(self):
         dados_excel = st.file_uploader(
             "Insira o arquivo Excel", type=("csv", "xlsx")
@@ -86,3 +87,4 @@ class CSVCollector:
         data_atual = datetime.now().isoformat()
         match = data_atual.split(".")
         return f"api/api-reponse-compra{match[0]}.parquet"
+
