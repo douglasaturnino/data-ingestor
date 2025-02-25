@@ -1,4 +1,4 @@
-
+from datetime import datetime
 from io import BytesIO
 
 import openpyxl
@@ -27,6 +27,11 @@ class CSVCollector:
         if validateData is not None:
             response = self.convertToParquet(validateData)
 
+        if self._buffer is not None:
+            file_name = self.fileName()
+            print(file_name)
+            self._aws.upload_file(response, file_name)
+            return True
 
 
     def getData(self):
@@ -78,4 +83,8 @@ class CSVCollector:
             print(f"Error ao transformar o DF em parquet: {e}")
             self._buffer = None
 
+    def fileName(self):
+        data_atual = datetime.now().isoformat()
+        match = data_atual.split(".")
+        return f"api/api-reponse-compra{match[0]}.parquet"
 
